@@ -4,7 +4,7 @@ import App from "./App";
 import { Home, NotFound } from "./pages";
 import Detail from "./pages/Details";
 
-const ROUTE_PATH = {
+export const ROUTE_PATH = {
   ROOT: "/",
   HOME: "",
   DETAIL: "character/:id",
@@ -13,7 +13,7 @@ const ROUTE_PATH = {
 const router = createBrowserRouter([
   {
     element: <App />,
-    path: ROUTE_PATH.HOME,
+    path: ROUTE_PATH.ROOT,
     errorElement: <NotFound />,
     children: [
       {

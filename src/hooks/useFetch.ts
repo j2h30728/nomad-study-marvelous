@@ -26,7 +26,6 @@ export default function useFetch<T>(fetchingCallBackFunction: () => Promise<Resp
     if (state.status === "initial") {
       setState((prev) => ({ ...prev, status: "pending" }));
       activePromise.current = loadDataFromEndpoint();
-      console.log(activePromise.current);
     }
   }, [fetchingCallBackFunction, state.status]);
 

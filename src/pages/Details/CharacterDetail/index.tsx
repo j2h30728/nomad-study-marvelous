@@ -12,9 +12,23 @@ export default function CharacterDetail() {
 
   return (
     characterDetail && (
-      <div>
-        <h2>{characterDetail?.name}</h2>
-        <img src={makeImagePathname(characterDetail.thumbnail.path, characterDetail.thumbnail.extension)} />
+      <div className="flex flex-col items-center p-10 space-y-10 w-full">
+        <h2 className="font-bold text-4xl">{characterDetail?.name}</h2>
+        <img
+          className="w-80"
+          src={makeImagePathname(characterDetail.thumbnail.path, characterDetail.thumbnail.extension)}
+        />
+
+        <h3 className="font-bold text-2xl self-center">
+          SERIES <span className="text-sm">{`(${characterDetail.series.available})`}</span>
+        </h3>
+        <div className="flex flex-col space-y-2">
+          {characterDetail.series.items.map((item) => (
+            <a className="hover:text-blue-700 active:text-red-900" href={item.resourceURI}>
+              {item.name}
+            </a>
+          ))}
+        </div>
       </div>
     )
   );
