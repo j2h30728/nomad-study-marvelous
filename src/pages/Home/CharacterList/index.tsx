@@ -1,11 +1,12 @@
 import { fetchingCharacterList } from "@/api";
 import makeImagePathname from "@/helpers/makeImagePathname";
 import useFetch from "@/hooks/useFetch";
+import { ROUTE_PATH } from "@/router";
 import { Character, Response } from "@/types";
 import { Link } from "react-router-dom";
 
 export default function CharacterList() {
-  const response = useFetch<Response<Character[]>>(fetchingCharacterList);
+  const response = useFetch<Response<Character[]>>(fetchingCharacterList, ROUTE_PATH.HOME);
   const characterList = response.data;
 
   return (

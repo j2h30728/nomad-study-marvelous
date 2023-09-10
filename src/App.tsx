@@ -1,11 +1,14 @@
 import { Outlet } from "react-router-dom";
 import Layout from "./components/Layout";
+import { CacheContextProvider } from "./contexts/CacheContext";
 
 function App() {
   return (
-    <Layout>
-      <Outlet />
-    </Layout>
+    <CacheContextProvider>
+      <Layout>
+        <Outlet />
+      </Layout>
+    </CacheContextProvider>
   );
 }
 

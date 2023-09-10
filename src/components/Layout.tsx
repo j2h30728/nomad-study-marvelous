@@ -15,7 +15,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             &lt;
           </Link>
         )}
-        <span className="text-red-700">MARVELOUS CHARACTER</span>
+        <Link to={ROUTE_PATH.HOME} className="text-red-700">
+          MARVELOUS CHARACTER
+        </Link>
         <div> </div>
       </div>
       {children}

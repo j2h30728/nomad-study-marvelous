@@ -7,7 +7,7 @@ import { Character, Response } from "@/types";
 
 export default function CharacterDetail() {
   const { id } = useParams();
-  const response = useFetch<Response<Character[]>>(() => fetchingCharacter(`${id}`));
+  const response = useFetch<Response<Character[]>>(() => fetchingCharacter(`${id}`), `${id}`);
   const characterDetail = response?.data?.results[0];
 
   return (
@@ -24,7 +24,7 @@ export default function CharacterDetail() {
         </h3>
         <div className="flex flex-col space-y-2">
           {characterDetail.series.items.map((item) => (
-            <a className="hover:text-blue-700 active:text-red-900" href={item.resourceURI}>
+            <a key={item.resourceURI} className="hover:text-blue-700 active:text-red-900" href={item.resourceURI}>
               {item.name}
             </a>
           ))}
