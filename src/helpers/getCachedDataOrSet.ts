@@ -6,7 +6,6 @@ const getCachedDataOrSet = () => {
       if (cache.has(key)) {
         return cache.get(key);
       }
-      console.log(key, data);
       cache.set(key, data);
       return data;
     },
