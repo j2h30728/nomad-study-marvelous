@@ -18,14 +18,14 @@ export default function useFetch<T>(fetchingCallBackFunction: () => Promise<Resp
     cacheKey,
   });
   const activePromise = useRef<Promise<void> | null>(null);
-  const { cacheData, isCachedDateValid } = useCacheContext();
+  const { setOrGetCacheData, isCachedDataValid } = useCacheContext();
 
   useEffect(() => {
     const loadDataFromEndpoint = async () => {
       try {
         const response = await fetchingCallBackFunction();
         const result = await response.json();
-        cacheData(cacheKey, result.data);
+        setOrGetCacheData(cacheKey, result.data);
         setState((prev) => ({ ...prev, data: result.data, cacheKey, status: "fulfilled" }));
       } catch (error) {
         setState((prev) => ({ ...prev, status: "rejected", error: error as Error }));
@@ -33,14 +33,14 @@ export default function useFetch<T>(fetchingCallBackFunction: () => Promise<Resp
     };
 
     if (state.status === "initial") {
-      if (isCachedDateValid(cacheKey)) {
-        setState((prev) => ({ ...prev, data: cacheData(cacheKey), cacheKey, status: "fulfilled" }));
+      if (isCachedDataValid(cacheKey)) {
+        setState((prev) => ({ ...prev, data: setOrGetCacheData(cacheKey), cacheKey, status: "fulfilled" }));
       } else {
         setState((prev) => ({ ...prev, status: "pending" }));
         activePromise.current = loadDataFromEndpoint();
       }
     }
-  }, [fetchingCallBackFunction, state.status, cacheKey, isCachedDateValid, cacheData]);
+  }, [fetchingCallBackFunction, state.status, cacheKey, isCachedDataValid, setOrGetCacheData]);
 
   if (state.status === "pending" && activePromise.current) {
     throw activePromise.current;
