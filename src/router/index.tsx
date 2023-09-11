@@ -1,14 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import App from "./App";
-import { Home, NotFound } from "./pages";
-import Detail from "./pages/Details";
-
-export const ROUTE_PATH = {
-  ROOT: "/",
-  HOME: "",
-  DETAIL: "character/:id",
-};
+import App from "../App";
+import { Home, NotFound } from "../pages";
+import Detail from "../pages/Details";
+import { ROUTE_PATH } from "./routePath";
 
 const router = createBrowserRouter([
   {

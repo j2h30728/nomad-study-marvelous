@@ -12,14 +12,14 @@ export default function CharacterDetail() {
 
   return (
     characterDetail && (
-      <div className="flex flex-col items-center p-10 space-y-10 w-full">
-        <h2 className="font-bold text-4xl">{characterDetail?.name}</h2>
+      <div className="flex flex-col items-center w-full p-10 space-y-10">
+        <h2 className="text-4xl font-bold">{characterDetail?.name}</h2>
         <img
           className="w-80"
           src={makeImagePathname(characterDetail.thumbnail.path, characterDetail.thumbnail.extension)}
         />
 
-        <h3 className="font-bold text-2xl self-center">
+        <h3 className="self-center text-2xl font-bold">
           SERIES <span className="text-sm">{`(${characterDetail.series.available})`}</span>
         </h3>
         <div className="flex flex-col space-y-2">
