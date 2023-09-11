@@ -18,7 +18,8 @@ export default function useFetch<T>(fetchingCallBackFunction: () => Promise<Resp
     cacheKey,
   });
   const activePromise = useRef<Promise<void> | null>(null);
-  const { cacheData, isCaching } = useCacheContext();
+  const { cacheData, isCachedDateValid } = useCacheContext();
+
   useEffect(() => {
     const loadDataFromEndpoint = async () => {
       try {
@@ -32,14 +33,14 @@ export default function useFetch<T>(fetchingCallBackFunction: () => Promise<Resp
     };
 
     if (state.status === "initial") {
-      if (isCaching(cacheKey)) {
+      if (isCachedDateValid(cacheKey)) {
         setState((prev) => ({ ...prev, data: cacheData(cacheKey), cacheKey, status: "fulfilled" }));
       } else {
         setState((prev) => ({ ...prev, status: "pending" }));
         activePromise.current = loadDataFromEndpoint();
       }
     }
-  }, [fetchingCallBackFunction, state.status, cacheKey, isCaching, cacheData]);
+  }, [fetchingCallBackFunction, state.status, cacheKey, isCachedDateValid, cacheData]);
 
   if (state.status === "pending" && activePromise.current) {
     throw activePromise.current;

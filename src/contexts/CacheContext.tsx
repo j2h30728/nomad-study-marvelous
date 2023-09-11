@@ -5,15 +5,15 @@ import { createContext, useContext } from "react";
 
 interface CacheContextType {
   cacheData: (key: string, data?: any) => any;
-  isCaching: (key: string) => boolean;
+  isCachedDateValid: (key: string) => boolean;
 }
 
 export const CacheContext = createContext<CacheContextType>({} as CacheContextType);
 
 export const CacheContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const { cacheData, isCaching } = cachingData();
+  const { cacheData, isCachedDateValid } = cachingData();
 
-  return <CacheContext.Provider value={{ cacheData, isCaching }}>{children}</CacheContext.Provider>;
+  return <CacheContext.Provider value={{ cacheData, isCachedDateValid }}>{children}</CacheContext.Provider>;
 };
 
 export const useCacheContext: () => CacheContextType = () => useContext(CacheContext);
