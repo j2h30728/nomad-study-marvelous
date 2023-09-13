@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import { fetchingCharacterList } from "@/api";
 import makeImagePathname from "@/helpers/makeImagePathname";
 import useFetch from "@/hooks/useFetch";
-import { Character, Response } from "@/types";
 import { ROUTE_PATH } from "@/router/routePath";
 
 export default function CharacterList() {
-  const response = useFetch<Response<Character[]>>(fetchingCharacterList, ROUTE_PATH.HOME);
+  const response = useFetch(fetchingCharacterList, ROUTE_PATH.HOME);
   const characterList = response.data;
 
   return (

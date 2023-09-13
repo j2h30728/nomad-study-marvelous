@@ -1,6 +1,12 @@
+import { Character, Response } from "@/types";
+
 const BASE_URL = "https://marvel-proxy.nomadcoders.workers.dev/v1/public/characters";
 
-const fetchData: typeof fetch = async (url) => await fetch(url);
+type FetchType = <T>(url: string) => Promise<Response<T>>;
+const fetchData: FetchType = async (url) => {
+  const response = await (await fetch(url)).json();
+  return response.data;
+};
 
-export const fetchingCharacterList = () => fetchData(BASE_URL);
-export const fetchingCharacter = (id: string) => fetchData(BASE_URL + "/" + id);
+export const fetchingCharacterList = () => fetchData<Character[]>(BASE_URL);
+export const fetchingCharacter = (id: string) => fetchData<Character[]>(BASE_URL + "/" + id);

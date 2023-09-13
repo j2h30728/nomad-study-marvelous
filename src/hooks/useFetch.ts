@@ -10,7 +10,7 @@ interface UseFetch<T> {
   cacheKey: string;
 }
 
-export default function useFetch<T>(fetchingCallBackFunction: () => Promise<Response>, cacheKey: string): UseFetch<T> {
+export default function useFetch<T>(fetchingCallBackFunction: () => Promise<T>, cacheKey: string): UseFetch<T> {
   const [state, setState] = useState<UseFetch<T>>({
     data: undefined,
     status: "initial",
@@ -24,9 +24,8 @@ export default function useFetch<T>(fetchingCallBackFunction: () => Promise<Resp
     const loadDataFromEndpoint = async () => {
       try {
         const response = await fetchingCallBackFunction();
-        const result = await response.json();
-        setOrGetCacheData(cacheKey, result.data);
-        setState((prev) => ({ ...prev, data: result.data, cacheKey, status: "fulfilled" }));
+        setOrGetCacheData(cacheKey, response);
+        setState((prev) => ({ ...prev, data: response, cacheKey, status: "fulfilled" }));
       } catch (error) {
         setState((prev) => ({ ...prev, status: "rejected", error: error as Error }));
       }

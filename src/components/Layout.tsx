@@ -6,7 +6,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const isRootPath = pathname === ROUTE_PATH.ROOT;
 
   return (
-    <div className="flex flex-col items-center w-full h-screen px-10 bg-slate-200">
+    <div className="flex flex-col items-center w-full px-10 ">
       <div className="fixed flex justify-between w-full p-8 font-extrabold bg-white shadow-xl ">
         {isRootPath ? (
           <div></div>
@@ -20,7 +20,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </Link>
         <div> </div>
       </div>
-      <div className="mt-32">{children}</div>
+      <div className="mt-32 ">{children}</div>
     </div>
   );
 };
