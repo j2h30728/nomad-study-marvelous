@@ -1,17 +1,14 @@
 import { Link } from "react-router-dom";
 
-import { fetchingCharacterList } from "@/api";
 import makeImagePathname from "@/helpers/makeImagePathname";
-import useFetch from "@/hooks/useFetch";
-import { ROUTE_PATH } from "@/router/routePath";
+import { useCharacterList } from "./hooks";
 
 export default function CharacterList() {
-  const response = useFetch(fetchingCharacterList, ROUTE_PATH.HOME);
-  const characterList = response.data;
+  const characterList = useCharacterList();
 
   return (
     <div className="grid w-full grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-      {characterList?.results.map((character) => (
+      {characterList?.map((character) => (
         <Link
           to={`character/${character.id}`}
           key={character.id}

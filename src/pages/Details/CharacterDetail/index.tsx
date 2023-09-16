@@ -1,13 +1,11 @@
 import { useParams } from "react-router-dom";
 
-import { fetchingCharacter } from "@/api";
 import makeImagePathname from "@/helpers/makeImagePathname";
-import useFetch from "@/hooks/useFetch";
+import { useCharacter } from "./hooks";
 
 export default function CharacterDetail() {
   const { id } = useParams();
-  const response = useFetch(() => fetchingCharacter(`${id}`), `${id}`);
-  const characterDetail = response?.data?.results[0];
+  const characterDetail = useCharacter(Number(id));
 
   return (
     characterDetail && (

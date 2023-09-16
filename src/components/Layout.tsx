@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         {isRootPath ? (
           <div></div>
         ) : (
-          <Link className="self-start text-2xl md:text-5xl sm:text-3xl" to={ROUTE_PATH.ROOT}>
+          <Link className="self-start text-2xl md:text-5xl sm:text-3xl" to={ROUTE_PATH.HOME}>
             &lt;
           </Link>
         )}
