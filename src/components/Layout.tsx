@@ -1,9 +1,8 @@
-import { ROUTE_PATH } from "@/router/routePath";
 import { Link, useLocation } from "react-router-dom";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
-  const isRootPath = pathname === ROUTE_PATH.ROOT;
+  const isRootPath = pathname === "/";
 
   return (
     <div className="flex flex-col items-center w-full px-10 ">
@@ -11,11 +10,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         {isRootPath ? (
           <div></div>
         ) : (
-          <Link className="self-start text-2xl md:text-5xl sm:text-3xl" to={ROUTE_PATH.HOME}>
+          <Link className="self-start text-2xl md:text-5xl sm:text-3xl" to="/">
             &lt;
           </Link>
         )}
-        <Link to={ROUTE_PATH.HOME} className="text-2xl text-red-700 md:text-5xl sm:text-3xl">
+        <Link to="/" className="text-2xl text-red-700 md:text-5xl sm:text-3xl">
           MARVELOUS CHARACTER
         </Link>
         <div> </div>

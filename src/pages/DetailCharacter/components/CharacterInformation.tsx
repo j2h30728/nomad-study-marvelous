@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 
-import makeImagePathname from "@/helpers/makeImagePathname";
-import { useCharacter } from "./hooks";
+import makeImagePathname from "@/utils/makeImagePathname";
+import useDetailCharacter from "@/hooks/characters/useDetailCharacter";
 
-export default function CharacterDetail() {
+export default function CharacterInformation() {
   const { id } = useParams();
-  const characterDetail = useCharacter(Number(id));
+  const characterDetail = useDetailCharacter(id!);
 
   return (
     characterDetail && (

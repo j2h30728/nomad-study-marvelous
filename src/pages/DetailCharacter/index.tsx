@@ -1,16 +1,16 @@
 import { Suspense } from "react";
 
-import CharacterList from "./components/CharacterList";
 import Loader from "@/components/Loader";
 import APIErrorBoundary from "@/components/ErrorBoundary/APIErrorBoundary";
+import CharacterInformation from "./components/CharacterInformation";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
-export default function Home() {
+export default function Details() {
   return (
     <ErrorBoundary>
       <APIErrorBoundary>
         <Suspense fallback={<Loader />}>
-          <CharacterList />
+          <CharacterInformation />
         </Suspense>
       </APIErrorBoundary>
     </ErrorBoundary>

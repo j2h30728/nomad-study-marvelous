@@ -1,6 +1,3 @@
-import { ROUTE_PATH } from "@/router/routePath";
-import { Link } from "react-router-dom";
-
 interface ErrorBoundaryProps {
   error: Error;
 }
@@ -12,7 +9,7 @@ const DefaultErrorBoundary = ({ error }: ErrorBoundaryProps) => {
       <span className="text-xl font-semibold">아래의 버튼을 눌러 홈으로 이동 해주세요.</span>
       <span className="font-semibold text-md text-slate-600">{error.message}</span>
       <button className="px-5 py-4 border border-black rounded-lg hover:bg-slate-100 active:bg-slate-300">
-        <Link to={ROUTE_PATH.ROOT}>홈으로 이동</Link>
+        <a href="/">홈으로 이동</a>
       </button>
     </div>
   );
