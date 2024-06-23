@@ -1,19 +1,25 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import getCachedDataOrSet from "@/helpers/getCachedDataOrSet";
 import { createContext, useContext } from "react";
 
-interface CacheContextType {
-  setOrGetCacheData: (key: string, data?: any) => any;
-  isCachedDataValid: (key: string) => boolean;
-}
+import createCache from "@/utils/createCache";
+
+type CacheContextType = ReturnType<typeof createCache>;
 
 export const CacheContext = createContext<CacheContextType>({} as CacheContextType);
 
 export const CacheContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const { setOrGetCacheData, isCachedDataValid } = getCachedDataOrSet();
+  const { setCacheData, getCacheData, isCachedDataValid } = createCache();
 
-  return <CacheContext.Provider value={{ setOrGetCacheData, isCachedDataValid }}>{children}</CacheContext.Provider>;
+  return (
+    <CacheContext.Provider value={{ setCacheData, getCacheData, isCachedDataValid }}>{children}</CacheContext.Provider>
+  );
 };
 
-export const useCacheContext: () => CacheContextType = () => useContext(CacheContext);
+export const useCacheContext: () => CacheContextType = () => {
+  const context = useContext(CacheContext);
+  if (!context) {
+    throw new Error("useCacheContext must be used within CacheProvider");
+  }
+  return context;
+};
