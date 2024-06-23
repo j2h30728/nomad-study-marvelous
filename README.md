@@ -1,6 +1,15 @@
-# 라이브러리 없이 Suspense / ErrorBoundary / Cache 구현하기
+## Ver.2) AWS Lambda / API GateWay / 무한 스크롤 / suspense
 
-## Suspense / ErrorBoundary
+### - AWS Lambda 함수 + API GateWay 로 서버리스 함수 생성
+
+- [관련 내용](https://github.com/j2h30728/react-s3-cloudfront/issues/1)
+- [풀 리퀘스트](https://github.com/j2h30728/study-suspense-errorboundary/pull/2)
+
+### - 라이브러리 사용하지않고 suspense, infinite scroll 구현
+
+## Ver.1) 라이브러리 없이 Suspense / ErrorBoundary / Cache 구현하기
+
+### Suspense / ErrorBoundary
 
 Suspense를 사용해 비동기로직 코드와 에러처리를 선언적으로 명시하고 중복을 줄일 수 있다.
 
@@ -18,7 +27,7 @@ export default function Home() {
 
 - 에러바운더리 추가 내용 : [https://aweary.dev/fault-tolerance-react/](https://aweary.dev/fault-tolerance-react/)
 
-## useFetch 커스텀훅
+### useFetch 커스텀훅
 
 suspense 를 사용하기 앞서 suspense에게 나의 비동기 로직 상태를 알려줘야한다.
 
@@ -29,9 +38,9 @@ suspense 를 사용하기 앞서 suspense에게 나의 비동기 로직 상태�
 - promise가 rejected 상태일때는 어떤 에러를 throw 해줄지</br>
   (에러다! 퉤퉤, 에러바운더리에서 캐치하고 설정한 컴포넌트 렌더링 함)
 
-#### [전체 코드](./src/hooks/useFetch.ts)
+##### [전체 코드](./src/hooks/useFetch.ts)
 
-### 1. 기본 설정
+#### 1. 기본 설정
 
 먼저, 상태와 타입을 설정.
 
@@ -55,7 +64,7 @@ interface UseFetch<T> {
 | fulfilled | 데이터를 성공적으로 가져온 상태 |
 | rejected  | 에러가 발생한 상태              |
 
-### 2. 컴포넌트 상태 설정
+#### 2. 컴포넌트 상태 설정
 
 ```tsx
 const [state, setState] = useState<UseFetch<T>>({
@@ -68,7 +77,7 @@ const [state, setState] = useState<UseFetch<T>>({
 
 초기 상태를 설정한다.
 
-### 3. useEffect 훅
+#### 3. useEffect 훅
 
 데이터를 가져오는 로직을 `useEffect` 안에 넣는다.
 
@@ -78,7 +87,7 @@ useEffect(() => {
 }, [fetchingCallBackFunction, state.status, cacheKey, isCachedDataValid, setOrGetCacheData]);
 ```
 
-### 4. 데이터 가져오기
+#### 4. 데이터 가져오기
 
 데이터를 가져오는 함수.
 
@@ -96,7 +105,7 @@ const loadDataFromEndpoint = async () => {
 };
 ```
 
-### 5. 캐싱 로직
+#### 5. 캐싱 로직
 
 만약 데이터가 이미 캐싱되어 있다면, 다시 요청하지 않고 캐싱된 데이터를 사용.
 
@@ -111,7 +120,7 @@ if (state.status === "initial") {
 }
 ```
 
-### 6. 서스펜스와 에러 처리
+#### 6. 서스펜스와 에러 처리
 
 `pending` 상태에서는 Promise를 throw하여 Suspense가 이를 인식하여 내가 설정한 fallback을 보여준다.
 
@@ -143,7 +152,7 @@ export default function Home() {
 }
 ```
 
-## ErrorBoundary
+### ErrorBoundary
 
 사실 공식문서에 코드가 존재한다. [: 공식문서](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary)
 
@@ -235,7 +244,7 @@ export default ErrorBoundary;
 
 <img style='margin :0 auto' src='./docs/Image.png' width='400'/>
 
-## caching
+### caching
 
 1. 인메모리로 캐싱
 2. 객체리터럴이 아닌 Map을 사용하고 메서드를 이용
