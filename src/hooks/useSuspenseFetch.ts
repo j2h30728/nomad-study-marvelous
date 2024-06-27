@@ -19,7 +19,7 @@ export default function useSuspenseFetch<T>(fetchCallback: () => Promise<T>, cac
     cacheKey,
   });
   const currentPromise = useRef<Promise<void> | null>(null);
-  const { setCacheData, getCacheData, isCachedDataValid } = useCacheContext();
+  const { setCacheData, getCacheData, isCachedDataValid } = useCacheContext<T>();
   useEffect(() => {
     const loadDataFromEndpoint = async () => {
       try {
@@ -37,7 +37,7 @@ export default function useSuspenseFetch<T>(fetchCallback: () => Promise<T>, cac
 
     if (state.status === "initial" || !isCachedDataValid(cacheKey)) {
       if (isCachedDataValid(cacheKey)) {
-        setState((prev) => ({ ...prev, data: getCacheData(cacheKey), cacheKey, status: "fulfilled" }));
+        setState((prev) => ({ ...prev, data: getCacheData(cacheKey)!, cacheKey, status: "fulfilled" }));
       } else {
         setState((prev) => ({ ...prev, status: "pending" }));
         currentPromise.current = loadDataFromEndpoint();

@@ -7,8 +7,7 @@ const useCharacterList = () => {
     (offset) => getCharacterList(offset),
     `characters`
   );
-  console.log(data);
-  const format = data.flatMap((list) => list.results);
+  const format = data?.flatMap((list) => list.results);
 
   return { data: format, status, error, loadMoreData, isFetching };
 };

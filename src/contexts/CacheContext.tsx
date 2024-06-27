@@ -4,22 +4,22 @@ import { createContext, useContext } from "react";
 
 import createCache from "@/utils/createCache";
 
-type CacheContextType = ReturnType<typeof createCache>;
+type CacheContextType<T> = ReturnType<typeof createCache<T>>;
 
-export const CacheContext = createContext<CacheContextType>({} as CacheContextType);
+export const CacheContext = createContext({} as CacheContextType<any>);
 
-export const CacheContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const { setCacheData, getCacheData, isCachedDataValid } = createCache();
+export function CacheContextProvider<T>({ children }: { children: React.ReactNode }) {
+  const { setCacheData, getCacheData, isCachedDataValid } = createCache<T>();
 
   return (
     <CacheContext.Provider value={{ setCacheData, getCacheData, isCachedDataValid }}>{children}</CacheContext.Provider>
   );
-};
+}
 
-export const useCacheContext: () => CacheContextType = () => {
-  const context = useContext(CacheContext);
+export function useCacheContext<T>(): CacheContextType<T> {
+  const context = useContext<CacheContextType<T>>(CacheContext);
   if (!context) {
     throw new Error("useCacheContext must be used within CacheProvider");
   }
   return context;
-};
+}

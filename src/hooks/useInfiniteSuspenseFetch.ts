@@ -21,7 +21,7 @@ export default function useInfiniteSuspenseFetch<T>(
   const currentOffset = useRef<number>(0);
   const currentPromise = useRef<Promise<void> | null>(null);
   const [isFetching, setIsFetching] = useState(false);
-  const { setCacheData, getCacheData, isCachedDataValid } = useCacheContext();
+  const { setCacheData, getCacheData, isCachedDataValid } = useCacheContext<T>();
 
   const loadDataFromEndpoint = useCallback(
     async (offset: number) => {
@@ -54,9 +54,10 @@ export default function useInfiniteSuspenseFetch<T>(
     const cacheKey = `${cacheKeyPrefix}-${offset}`;
 
     if (isCachedDataValid(cacheKey)) {
+      const cachedData = getCacheData(cacheKey);
       setState((prev) => ({
         ...prev,
-        data: [...prev.data, getCacheData(cacheKey)],
+        data: [...prev.data, cachedData!],
         status: "fulfilled",
       }));
       currentOffset.current = offset + 1;
@@ -71,7 +72,8 @@ export default function useInfiniteSuspenseFetch<T>(
     if (state.status === "initial") {
       const cacheKey = `${cacheKeyPrefix}-0`;
       if (isCachedDataValid(cacheKey)) {
-        setState({ data: getCacheData(cacheKey), status: "fulfilled", error: null });
+        const cachedData = getCacheData(cacheKey);
+        setState({ data: [cachedData!], status: "fulfilled", error: null });
       } else {
         setState((prev) => ({ ...prev, status: "pending" }));
         currentPromise.current = loadDataFromEndpoint(0);
@@ -86,6 +88,5 @@ export default function useInfiniteSuspenseFetch<T>(
   if (state.status === "rejected" && state.error) {
     throw state.error;
   }
-
   return { ...state, loadMoreData, isFetching };
 }
